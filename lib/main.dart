@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:travel_app/pages/home_page.dart';
+import 'package:travel_app/pages/starting_page.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+import 'Components.dart';
 
-final GoRouter routes = GoRouter(
+final routes = GoRouter(
   routes: <RouteBase>[
     GoRoute(
         path: '/',
@@ -16,6 +16,10 @@ final GoRouter routes = GoRouter(
         builder: (context, state) => Home(size: MediaQuery.of(context).size))
   ],
 );
+
+void main() {
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -29,66 +33,21 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key, required this.size});
-  final size;
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-          child: Column(children: [
-        Padding(
-          padding: const EdgeInsets.only(
-              top: 10.0, left: 8.0, right: 8.0, bottom: 20.0),
-          child: AspectRatio(
-            aspectRatio: 350 / 323,
-            child: Container(
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(31)),
-                  color: Colors.black),
-            ),
-          ),
-        ),
-        const Padding(
-            padding: EdgeInsets.only(left: 10),
-            child: Column(children: [
-              ListTile(
-                title: Text(
-                  "Winter\nVacation Trips",
-                  style: TextStyle(
-                      fontSize: 40, fontWeight: FontWeight.w500, height: 1.25),
-                ),
-                subtitle: Text(
-                  "\nEnjoy your winter vacation with warmth\nand amazing sightseeing on the mountains.\nEnjoy the best experience with us!",
-                  style: TextStyle(fontSize: 18),
-                ),
-                dense: false,
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Align(
-                  alignment: Alignment.bottomLeft,
-                  child: GoButton(
-                    page: '/home',
-                    message: "Let's Go!",
-                  ))
-            ]))
-      ])),
-    );
-  }
-}
-
 class GoButton extends StatelessWidget {
-  const GoButton({super.key, required this.page, required this.message});
+  const GoButton(
+      {super.key,
+      required this.page,
+      required this.message,
+      required this.icon});
   final String page;
   final String message;
+  final IconData icon;
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
         onPressed: () => context.go(page),
         style: ElevatedButton.styleFrom(
+            minimumSize: Size(80, 50),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0)),
             backgroundColor: Colors.purple.shade800),
@@ -101,7 +60,7 @@ class GoButton extends StatelessWidget {
                   style: const TextStyle(color: Colors.white),
                 ),
                 Icon(
-                  Icons.arrow_forward,
+                  icon,
                   color: Colors.white,
                 )
               ],
@@ -112,13 +71,12 @@ class GoButton extends StatelessWidget {
 class Home extends StatelessWidget {
   const Home({super.key, this.size});
   final size;
+  final Color c = Colors.black;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        body: Center(
-          child: ElevatedButton(
-              onPressed: () => context.go('/'), child: Text('Return')),
-        ));
+        bottomNavigationBar: NavBar(c: c),
+        body: Pages());
   }
 }
