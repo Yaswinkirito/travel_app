@@ -50,10 +50,10 @@ class MyHomePage extends StatelessWidget {
             ),
           ),
         ),
-        Padding(
+        const Padding(
             padding: EdgeInsets.only(left: 10),
             child: Column(children: [
-              const ListTile(
+              ListTile(
                 title: Text(
                   "Winter\nVacation Trips",
                   style: TextStyle(
@@ -65,30 +65,47 @@ class MyHomePage extends StatelessWidget {
                 ),
                 dense: false,
               ),
-              const SizedBox(
+              SizedBox(
                 height: 30,
               ),
-              ElevatedButton(
-                  onPressed: () => context.go('/home'),
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.purple.shade800),
-                  child: const SizedBox(
-                      width: 79,
-                      child: Row(
-                        children: [
-                          Text(
-                            "Let's Go!",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          Icon(
-                            Icons.arrow_forward,
-                            color: Colors.white,
-                          )
-                        ],
-                      )))
+              Align(
+                  alignment: Alignment.bottomLeft,
+                  child: GoButton(
+                    page: '/home',
+                    message: "Let's Go!",
+                  ))
             ]))
       ])),
     );
+  }
+}
+
+class GoButton extends StatelessWidget {
+  const GoButton({super.key, required this.page, required this.message});
+  final String page;
+  final String message;
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        onPressed: () => context.go(page),
+        style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)),
+            backgroundColor: Colors.purple.shade800),
+        child: SizedBox(
+            width: 79,
+            child: Row(
+              children: [
+                Text(
+                  message,
+                  style: const TextStyle(color: Colors.white),
+                ),
+                Icon(
+                  Icons.arrow_forward,
+                  color: Colors.white,
+                )
+              ],
+            )));
   }
 }
 
