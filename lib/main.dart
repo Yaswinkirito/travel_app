@@ -2,20 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:travel_app/pages/home_page.dart';
 import 'package:travel_app/pages/starting_page.dart';
+import 'package:travel_app/routes.dart';
 
 import 'Components.dart';
-
-final routes = GoRouter(
-  routes: <RouteBase>[
-    GoRoute(
-        path: '/',
-        builder: (context, state) =>
-            MyHomePage(size: MediaQuery.of(context).size)),
-    GoRoute(
-        path: '/home',
-        builder: (context, state) => Home(size: MediaQuery.of(context).size))
-  ],
-);
 
 void main() {
   runApp(const MyApp());
@@ -75,6 +64,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        extendBody: true,
         backgroundColor: Colors.white,
         bottomNavigationBar: NavBar(c: c),
         body: Pages());

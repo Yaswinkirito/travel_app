@@ -109,18 +109,34 @@ class _SymbolState extends State<Symbol> {
   }
 }
 
-class SlideText extends StatelessWidget {
-  const SlideText({super.key, required this.s, required this.i});
-  final String s;
-  final double i;
-  @override
-  Widget build(BuildContext context) {
+class Slides {
+  Slides({required this.currentIndex});
+  final int currentIndex;
+  List slidenames = [
+    ["Popular", false],
+    ["Featured", false],
+    ["Most Visted", false],
+    ["Europe", false],
+    ["Asia", false],
+    ["Africa", false]
+  ];
+  void tag(int i) {
+    for (int j = 0; j < slidenames.length; j++) {
+      slidenames[j][1] = false;
+    }
+    slidenames[i][1] = true;
+  }
+
+  Padding GetTag(int index) {
     return Padding(
-      padding: EdgeInsets.all(12.0),
-      child: (Text(
-        s,
-        style: TextStyle(fontSize: i, fontWeight: FontWeight.w400),
-      )),
+      padding: const EdgeInsets.all(8.0),
+      child: Text(
+        slidenames[index][0],
+        style: TextStyle(
+            fontWeight:
+                slidenames[index][1] ? FontWeight.bold : FontWeight.w400,
+            fontSize: 20),
+      ),
     );
   }
 }
