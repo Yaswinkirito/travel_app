@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:travel_app/Components.dart';
+
+import '../main.dart';
 
 class Detail extends StatelessWidget {
   const Detail({super.key});
@@ -11,6 +14,10 @@ class Detail extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       extendBody: true,
+      appBar: AppBar(
+        leading: Icon(Icons.menu),
+        backgroundColor: Colors.transparent,
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: ExtendBar(
         size: size,
@@ -43,6 +50,10 @@ class _ExtendBarState extends State<ExtendBar> {
     double r = 50.0;
 
     return Container(
+        padding: EdgeInsets.only(
+            top: widget.size.height * (0.65) * (0.08),
+            left: widget.size.width * (0.08),
+            right: widget.size.width * (0.08)),
         height: widget.size.height * (0.65),
         width: widget.size.width,
         decoration: BoxDecoration(
@@ -52,69 +63,139 @@ class _ExtendBarState extends State<ExtendBar> {
         ),
         child: Column(
           children: [
-            Text("Hello"),
-            ListTile(
-              title: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 4.0, right: 4.0),
-                    child: Icon(Icons.pin_drop_rounded),
-                  ),
-                  Text(
-                    "Honshu, Japan",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              subtitle: Row(
-                children: [
-                  RatingBar.builder(
-                    itemSize: 30,
-                    initialRating: 3,
-                    minRating: 1,
-                    direction: Axis.horizontal,
-                    allowHalfRating: true,
-                    itemCount: 5,
-                    itemBuilder: (context, _) => Icon(
-                      Icons.star,
-                      color: Colors.amber,
-                      size: 1.0,
-                    ),
-                    onRatingUpdate: (rating) {
-                      rate = rating;
-                      setState(() {
-                        print("Hello");
-                      });
-                    },
-                  ),
-                  Text("$rate")
-                ],
-              ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: const Text("Mount Fuji",
+                  style: TextStyle(
+                      fontSize: 30,
+                      fontFamily: "NotoSerifVithkuqi",
+                      fontWeight: FontWeight.w500)),
+            ),
+            const SizedBox(
+              height: 6,
             ),
             Row(
               children: [
-                GestureDetector(
-                  child: Icon(Icons.remove),
-                  onTap: () {
+                Icon(
+                  Icons.location_on,
+                  size: 18,
+                  color: Colors.black,
+                ),
+                SizedBox(
+                  width: 4,
+                ),
+                Text(
+                  "Honshu, Japan",
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 6,
+            ),
+            Row(
+              children: [
+                RatingBar.builder(
+                  itemSize: 18,
+                  initialRating: 0,
+                  minRating: 0,
+                  direction: Axis.horizontal,
+                  allowHalfRating: true,
+                  itemCount: 5,
+                  itemBuilder: (context, _) => const Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                    size: 1.0,
+                  ),
+                  onRatingUpdate: (rating) {
+                    rate = rating;
                     setState(() {
-                      _count--;
-                      if (_count < 0) {
-                        _count = 0;
-                      }
+                      print("Hello");
                     });
                   },
                 ),
-                Text("$_count"),
-                GestureDetector(
-                  child: Icon(Icons.add),
-                  onTap: () {
-                    setState(() {
-                      _count++;
-                    });
-                  },
-                )
+                SizedBox(
+                  width: 4.0,
+                ),
+                Text("$rate")
               ],
-            )
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Row(
+              children: [
+                Container(
+                  height: 45,
+                  width: (_count < 10) ? 122 : 130,
+                  decoration: BoxDecoration(
+                      color: Colors.grey.shade200,
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        child: const Button(icon: Icons.remove),
+                        onTap: () {
+                          setState(() {
+                            _count--;
+                            if (_count < 0) {
+                              _count = 0;
+                            }
+                          });
+                        },
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8.0, bottom: 8.0, left: 20, right: 20),
+                        child: Center(
+                            child: Text(
+                          "$_count",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        )),
+                      ),
+                      GestureDetector(
+                        child: const Button(icon: Icons.add),
+                        onTap: () {
+                          setState(() {
+                            _count++;
+                          });
+                        },
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  child: Icon(
+                    Icons.schedule,
+                    size: 30,
+                  ),
+                  padding: EdgeInsets.fromLTRB(12, 0, 4, 0),
+                ),
+                Padding(
+                  child: Text(
+                    "$_count Days",
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  padding: EdgeInsets.fromLTRB(4, 0, 8, 0),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Descrpition(
+                title: "Description",
+                text:
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque dignissim augue sed fringilla posuere. Etiam sagittis, nibh vitae maximus feugiat, neque urna pretium arcu, non fringilla mi sapien et dolor. Phasellus ut interdum nisi. Quisque a lectus tortor. Proin varius ultrices tortor ac rutrum."),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Text(r"$400/package"),
+              GoButton(
+                icon: Icons.menu,
+                page: "/home",
+                state: false,
+                message: "Book Now",
+              )
+            ])
           ],
         ));
   }

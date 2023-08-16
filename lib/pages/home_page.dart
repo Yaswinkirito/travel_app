@@ -1,6 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:travel_app/Components.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
+List<String> cities = [
+  "Tokyo",
+  "New York",
+  "San Fransico",
+  "Las Vegas",
+  "London",
+  "Brookln",
+  "California",
+  "Paris"
+];
 
 class Pages extends StatefulWidget {
   const Pages({super.key});
@@ -10,17 +22,12 @@ class Pages extends StatefulWidget {
 }
 
 class _PagesState extends State<Pages> {
+  var slide = Slides(currentIndex: 0);
   @override
   Widget build(BuildContext context) {
-    var slide = Slides(currentIndex: 0);
-
     return SafeArea(
       bottom: false,
       child: Column(children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: bar(),
-        ),
         SizedBox(
             height: 48,
             child: ListView.builder(
@@ -48,14 +55,16 @@ class _PagesState extends State<Pages> {
                 return Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Container(
-                    height: 402 * (1 / 3),
-                    width: 522 * (0.75),
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      border: Border.all(color: Colors.black),
-                      borderRadius: BorderRadius.circular(24.0),
-                    ),
-                  ),
+                      height: 402 * (1 / 3),
+                      width: 522 * (0.75),
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        border: Border.all(color: Colors.black),
+                        borderRadius: BorderRadius.circular(24.0),
+                      ),
+                      child: CarouselDetails(
+                        name: cities[index],
+                      )),
                 );
               }),
         ),
@@ -123,6 +132,41 @@ class bar extends StatelessWidget {
           size: 43,
         )
       ]),
+    );
+  }
+}
+
+class CarouselDetails extends StatelessWidget {
+  const CarouselDetails({super.key, required this.name});
+  final String name;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            name,
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          RatingBar.builder(
+            itemSize: 18,
+            initialRating: 5,
+            minRating: 0,
+            direction: Axis.horizontal,
+            allowHalfRating: true,
+            itemCount: 5,
+            itemBuilder: (context, _) => const Icon(
+              Icons.star,
+              color: Colors.white,
+              size: 1.0,
+            ),
+            onRatingUpdate: (rating) {},
+          ),
+        ],
+      ),
     );
   }
 }

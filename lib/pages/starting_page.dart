@@ -49,6 +49,7 @@ class MyHomePage extends StatelessWidget {
                         page: '/home',
                         message: "Let's Go!",
                         icon: Icons.arrow_forward,
+                        state: true,
                       )))
             ]))
       ])),

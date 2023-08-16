@@ -140,3 +140,48 @@ class Slides {
     );
   }
 }
+
+class Button extends StatelessWidget {
+  const Button({super.key, required this.icon});
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 36.0,
+      height: 45,
+      child: Center(
+        child: Icon(
+          icon,
+          size: 28,
+          color: Colors.white,
+        ),
+      ),
+      decoration: BoxDecoration(
+          color: Color.fromRGBO(138, 43, 226, 10),
+          borderRadius: BorderRadius.all(Radius.circular(12))),
+    );
+  }
+}
+
+class Descrpition extends StatelessWidget {
+  const Descrpition({super.key, required this.title, required this.text});
+  final String title;
+  final String text;
+  @override
+  Widget build(BuildContext context) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Text(
+        title,
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      ),
+      SizedBox(
+        height: 10,
+      ),
+      Text(
+        text,
+        style: TextStyle(fontSize: 18),
+      )
+    ]);
+  }
+}
