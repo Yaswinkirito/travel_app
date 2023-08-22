@@ -1,3 +1,4 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 import '../main.dart';
@@ -16,11 +17,24 @@ class MyHomePage extends StatelessWidget {
               top: 10.0, left: 8.0, right: 8.0, bottom: 20.0),
           child: AspectRatio(
             aspectRatio: 350 / 323,
-            child: Container(
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(31)),
-                  color: Colors.black),
-            ),
+            child: FutureBuilder(
+                future: FirebaseStorage.instance
+                    .ref("images/london.jpeg")
+                    .getDownloadURL(),
+                builder: (context, t) {
+                  if (t.hasData) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(31)),
+                        image: DecorationImage(
+                            image: Image.network(t.data.toString()).image,
+                            fit: BoxFit.cover),
+                      ),
+                    );
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                }),
           ),
         ),
         const Padding(
