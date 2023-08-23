@@ -1,12 +1,16 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:travel_app/firebase_options.dart';
 import 'package:travel_app/pages/home_page.dart';
 
 import 'package:travel_app/routes.dart';
 
 import 'Components.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -18,6 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: routes,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -76,8 +81,8 @@ class Home extends StatelessWidget {
     return Scaffold(
         extendBody: true,
         appBar: AppBar(
-          leading: Icon(Icons.menu, color: Colors.black, size: 30),
-          title: Text(
+          leading: const Icon(Icons.menu, color: Colors.black, size: 30),
+          title: const Text(
             "Discover",
             style: TextStyle(
               color: Colors.black,

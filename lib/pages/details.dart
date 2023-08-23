@@ -1,12 +1,22 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:go_router/go_router.dart';
 import 'package:travel_app/Components.dart';
 
 import '../main.dart';
 
 class Detail extends StatelessWidget {
-  const Detail({super.key});
-
+  const Detail(
+      {super.key,
+      required this.title,
+      required this.description,
+      required this.rate,
+      required this.image});
+  final String title;
+  final String description;
+  final double rate;
+  final String image;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -14,36 +24,60 @@ class Detail extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       extendBody: true,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        leading: Icon(Icons.menu),
+        leading: GestureDetector(
+          child: const Icon(Icons.arrow_back),
+          onTap: () {
+            context.go('/home');
+          },
+        ),
         backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: ExtendBar(
         size: size,
+        title: title,
+        description: description,
+        rate: rate,
       ),
-      body: SafeArea(
-        child: Column(children: [
-          Container(
-            decoration: BoxDecoration(color: Colors.black),
-            child: Center(child: Text("hello")),
-          ),
-        ]),
-      ),
+      body: FutureBuilder(
+          future:
+              FirebaseStorage.instance.ref("images/$image").getDownloadURL(),
+          builder: (context, t) {
+            if (t.hasData) {
+              return Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: Image.network(t.data.toString()).image,
+                      fit: BoxFit.cover),
+                ),
+              );
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          }),
     );
   }
 }
 
 class ExtendBar extends StatefulWidget {
-  const ExtendBar({super.key, required this.size});
+  const ExtendBar(
+      {super.key,
+      required this.size,
+      required this.title,
+      required this.description,
+      required this.rate});
   final size;
-
+  final String title;
+  final String description;
+  final double rate;
   @override
   State<ExtendBar> createState() => _ExtendBarState();
 }
 
 class _ExtendBarState extends State<ExtendBar> {
-  double rate = 0;
   int _count = 0;
   @override
   Widget build(BuildContext context) {
@@ -65,7 +99,7 @@ class _ExtendBarState extends State<ExtendBar> {
           children: [
             Align(
               alignment: Alignment.topLeft,
-              child: const Text("Mount Fuji",
+              child: Text(widget.title,
                   style: TextStyle(
                       fontSize: 30,
                       fontFamily: "NotoSerifVithkuqi",
@@ -85,7 +119,7 @@ class _ExtendBarState extends State<ExtendBar> {
                   width: 4,
                 ),
                 Text(
-                  "Honshu, Japan",
+                  widget.title,
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                 ),
               ],
@@ -97,8 +131,9 @@ class _ExtendBarState extends State<ExtendBar> {
               children: [
                 RatingBar.builder(
                   itemSize: 18,
-                  initialRating: 0,
+                  initialRating: widget.rate,
                   minRating: 0,
+                  ignoreGestures: true,
                   direction: Axis.horizontal,
                   allowHalfRating: true,
                   itemCount: 5,
@@ -107,17 +142,12 @@ class _ExtendBarState extends State<ExtendBar> {
                     color: Colors.amber,
                     size: 1.0,
                   ),
-                  onRatingUpdate: (rating) {
-                    rate = rating;
-                    setState(() {
-                      print("Hello");
-                    });
-                  },
+                  onRatingUpdate: (rating) {},
                 ),
                 SizedBox(
                   width: 4.0,
                 ),
-                Text("$rate")
+                Text("${widget.rate}")
               ],
             ),
             SizedBox(
@@ -183,12 +213,18 @@ class _ExtendBarState extends State<ExtendBar> {
             SizedBox(
               height: 10,
             ),
-            Descrpition(
-                title: "Description",
-                text:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque dignissim augue sed fringilla posuere. Etiam sagittis, nibh vitae maximus feugiat, neque urna pretium arcu, non fringilla mi sapien et dolor. Phasellus ut interdum nisi. Quisque a lectus tortor. Proin varius ultrices tortor ac rutrum."),
+            Descrpition(title: "Description", text: widget.description),
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text(r"$400/package"),
+              RichText(
+                  text: TextSpan(
+                      text: r"$400",
+                      style: TextStyle(
+                          color: Color.fromRGBO(138, 43, 226, 10),
+                          fontWeight: FontWeight.w500,
+                          fontSize: 25),
+                      children: const <TextSpan>[
+                    TextSpan(text: "/Package", style: TextStyle(fontSize: 18))
+                  ])),
               GoButton(
                 icon: Icons.menu,
                 page: "/home",

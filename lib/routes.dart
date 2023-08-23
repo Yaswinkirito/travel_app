@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:travel_app/pages/details.dart';
 import 'package:travel_app/pages/starting_page.dart';
+import 'package:travel_app/pages/view_all.dart';
 
 import 'main.dart';
 
@@ -14,6 +15,14 @@ final routes = GoRouter(
     GoRoute(
         path: '/home',
         builder: (context, state) => Home(size: MediaQuery.of(context).size)),
-    GoRoute(path: '/detail', builder: (context, state) => Detail())
+    GoRoute(
+        path: '/detail/:id1/:id2/:id3/:id4',
+        name: 'detail',
+        builder: (context, state) => Detail(
+            title: state.pathParameters['id1'].toString(),
+            description: state.pathParameters['id2'].toString(),
+            rate: double.parse(state.pathParameters['id3'].toString()),
+            image: state.pathParameters['id4'].toString())),
+    GoRoute(path: '/view', builder: (context, state) => ViewAll())
   ],
 );

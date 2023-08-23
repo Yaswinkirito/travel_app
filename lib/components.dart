@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:go_router/go_router.dart';
 
 class Carousel extends StatelessWidget {
@@ -45,6 +46,7 @@ class NavBar extends StatefulWidget {
 }
 
 class _NavBarState extends State<NavBar> {
+  var selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -62,21 +64,57 @@ class _NavBarState extends State<NavBar> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                    child: Symbol(name: Icons.house),
-                    onTap: () => {context.go("/home"), print('hello')},
+                    child: Symbol(
+                      name: Icons.house,
+                      index: 0,
+                      selectedIndex: selectedIndex,
+                    ),
+                    onTap: () => {
+                      context.go("/home"),
+                      setState(() {
+                        selectedIndex = 0;
+                      })
+                    },
                   ),
-                  Icon(
-                    Icons.calendar_month_outlined,
-                    size: 40,
+                  GestureDetector(
+                    child: Symbol(
+                      name: Icons.calendar_month_outlined,
+                      index: 1,
+                      selectedIndex: selectedIndex,
+                    ),
+                    onTap: () => {
+                      setState(() {
+                        selectedIndex = 1;
+                        print(selectedIndex);
+                      })
+                    },
                   ),
-                  Icon(
-                    Icons.search,
-                    size: 40,
+                  GestureDetector(
+                    child: Symbol(
+                      name: Icons.search,
+                      index: 2,
+                      selectedIndex: selectedIndex,
+                    ),
+                    onTap: () => {
+                      context.go("/home"),
+                      setState(() {
+                        selectedIndex = 2;
+                      })
+                    },
                   ),
-                  Icon(
-                    Icons.person,
-                    size: 40,
-                  )
+                  GestureDetector(
+                    child: Symbol(
+                      name: Icons.person,
+                      index: 3,
+                      selectedIndex: selectedIndex,
+                    ),
+                    onTap: () => {
+                      context.go("/home"),
+                      setState(() {
+                        selectedIndex = 3;
+                      })
+                    },
+                  ),
                 ]),
           ),
         ));
@@ -84,28 +122,20 @@ class _NavBarState extends State<NavBar> {
 }
 
 // ignore: must_be_immutable
-class Symbol extends StatefulWidget {
-  Symbol({super.key, required this.name});
+class Symbol extends StatelessWidget {
+  Symbol(
+      {super.key,
+      required this.name,
+      required this.index,
+      required this.selectedIndex});
   final name;
   var click1 = false;
-  @override
-  State<Symbol> createState() => _SymbolState();
-}
-
-class _SymbolState extends State<Symbol> {
+  final index;
+  int selectedIndex;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        child: Icon(
-          widget.name,
-          size: 40,
-          color: widget.click1 ? Colors.blue.shade600 : Colors.black,
-        ),
-        onTap: () => setState(
-              () {
-                widget.click1 = !widget.click1;
-              },
-            ));
+    return Icon(name,
+        size: 40, color: (selectedIndex == index) ? Colors.black : Colors.grey);
   }
 }
 
@@ -183,5 +213,50 @@ class Descrpition extends StatelessWidget {
         style: TextStyle(fontSize: 18),
       )
     ]);
+  }
+}
+
+class CarouselDetails extends StatelessWidget {
+  const CarouselDetails({super.key, required this.name, required this.rate});
+  final String name;
+  final rate;
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      child: ListTile(
+        visualDensity: VisualDensity(vertical: 3),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20))),
+        tileColor: Colors.black.withOpacity(0.35),
+        title: Text(
+          name,
+          style: TextStyle(fontSize: 25),
+        ),
+        trailing: const CircleAvatar(
+          backgroundColor: Colors.white,
+          radius: 16,
+          child: Icon(
+            Icons.favorite,
+            color: Colors.pink,
+            size: 20,
+          ),
+        ),
+        subtitle: RatingBar.builder(
+            itemSize: 18,
+            initialRating: rate,
+            minRating: 0,
+            direction: Axis.horizontal,
+            allowHalfRating: true,
+            itemCount: 5,
+            ignoreGestures: true,
+            itemBuilder: (context, _) => const Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                  size: 1.0,
+                ),
+            onRatingUpdate: (rating) {}),
+        textColor: Colors.white,
+      ),
+    );
   }
 }
