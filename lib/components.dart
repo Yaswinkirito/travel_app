@@ -210,7 +210,7 @@ class Descrpition extends StatelessWidget {
       ),
       Text(
         text,
-        style: TextStyle(fontSize: 18),
+        style: TextStyle(fontSize: 16),
       )
     ]);
   }
@@ -230,7 +230,7 @@ class CarouselDetails extends StatelessWidget {
         tileColor: Colors.black.withOpacity(0.35),
         title: Text(
           name,
-          style: TextStyle(fontSize: 25),
+          style: TextStyle(fontSize: 22),
         ),
         trailing: const CircleAvatar(
           backgroundColor: Colors.white,

@@ -21,11 +21,20 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        return android;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for android - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -50,33 +59,5 @@ class DefaultFirebaseOptions {
     projectId: 'gdsc-project-2',
     authDomain: 'gdsc-project-2.firebaseapp.com',
     storageBucket: 'gdsc-project-2.appspot.com',
-  );
-
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCiwsHHdj0Dl9aKg1-28XrXiu527v3Xs4g',
-    appId: '1:310773989407:android:03056826488ef17415d52a',
-    messagingSenderId: '310773989407',
-    projectId: 'gdsc-project-2',
-    storageBucket: 'gdsc-project-2.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyD_fLtIu0ChLUAO391LNV0Z4jwkx5Sy2pU',
-    appId: '1:310773989407:ios:8a738e65d12dfef915d52a',
-    messagingSenderId: '310773989407',
-    projectId: 'gdsc-project-2',
-    storageBucket: 'gdsc-project-2.appspot.com',
-    iosClientId: '310773989407-kmlv56hs666np8vhurri9ptnnvfam4j7.apps.googleusercontent.com',
-    iosBundleId: 'com.example.travelApp',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyD_fLtIu0ChLUAO391LNV0Z4jwkx5Sy2pU',
-    appId: '1:310773989407:ios:7254f2add623aa7715d52a',
-    messagingSenderId: '310773989407',
-    projectId: 'gdsc-project-2',
-    storageBucket: 'gdsc-project-2.appspot.com',
-    iosClientId: '310773989407-kc0ash7815naqra3nclcab2l9dg01afh.apps.googleusercontent.com',
-    iosBundleId: 'com.example.travelApp.RunnerTests',
   );
 }

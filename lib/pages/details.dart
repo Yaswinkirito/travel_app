@@ -100,10 +100,10 @@ class _ExtendBarState extends State<ExtendBar> {
             Align(
               alignment: Alignment.topLeft,
               child: Text(widget.title,
-                  style: TextStyle(
-                      fontSize: 30,
+                  style: const TextStyle(
+                      fontSize: 22,
                       fontFamily: "NotoSerifVithkuqi",
-                      fontWeight: FontWeight.w500)),
+                      fontWeight: FontWeight.w400)),
             ),
             const SizedBox(
               height: 6,
@@ -176,7 +176,7 @@ class _ExtendBarState extends State<ExtendBar> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                            top: 8.0, bottom: 8.0, left: 20, right: 20),
+                            top: 8.0, bottom: 2.0, left: 20, right: 20),
                         child: Center(
                             child: Text(
                           "$_count",

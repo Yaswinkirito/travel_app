@@ -93,16 +93,15 @@ class ImageWidget extends StatelessWidget {
       future: FirebaseStorage.instance.ref(image).getDownloadURL(),
       builder: (context, t) {
         if (t.hasData) {
-          return Expanded(
-              child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(24.0),
-                      image: DecorationImage(
-                          image: Image.network(t.data.toString()).image,
-                          fit: BoxFit.fill)),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [CarouselDetails(name: name, rate: rate)])));
+          return Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(24.0),
+                  image: DecorationImage(
+                      image: Image.network(t.data.toString()).image,
+                      fit: BoxFit.fill)),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [CarouselDetails(name: name, rate: rate)]));
         } else {
           return const Center(child: CircularProgressIndicator());
         }
