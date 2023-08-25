@@ -41,7 +41,8 @@ class StreamCarousel extends StatelessWidget {
                           padding: const EdgeInsets.all(12.0),
                           child: GestureDetector(
                             child: SizedBox(
-                                height: height,
+                                height:
+                                    MediaQuery.of(context).size.height * height,
                                 width:
                                     MediaQuery.of(context).size.width * width,
                                 child: ImageWidget(

@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:travel_app/firebase_options.dart';
@@ -11,6 +12,7 @@ import 'Components.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   runApp(const MyApp());
 }
 
@@ -69,6 +71,34 @@ class GoButton extends StatelessWidget {
                     message,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ))));
+  }
+}
+
+class GoButton1 extends StatelessWidget {
+  const GoButton1(
+      {super.key,
+      required this.page,
+      required this.message,
+      required this.icon,
+      required this.state});
+  final String page;
+  final String message;
+  final IconData icon;
+  final bool state;
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () => context.go(page),
+      style: ElevatedButton.styleFrom(
+          minimumSize: Size(140, 39 * 1.5),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
+          backgroundColor: Colors.purple.shade800),
+      child: Text(
+        message,
+        style: const TextStyle(color: Colors.white, fontSize: 16),
+      ),
+    );
   }
 }
 

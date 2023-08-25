@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:go_router/go_router.dart';
 
+var i = 0;
+
 class Carousel extends StatelessWidget {
   const Carousel({super.key});
 
@@ -46,7 +48,7 @@ class NavBar extends StatefulWidget {
 }
 
 class _NavBarState extends State<NavBar> {
-  var selectedIndex = 0;
+  var selectedIndex = i;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -73,6 +75,7 @@ class _NavBarState extends State<NavBar> {
                       context.go("/home"),
                       setState(() {
                         selectedIndex = 0;
+                        i = selectedIndex;
                       })
                     },
                   ),
@@ -83,8 +86,10 @@ class _NavBarState extends State<NavBar> {
                       selectedIndex: selectedIndex,
                     ),
                     onTap: () => {
+                      context.go("/calender"),
                       setState(() {
                         selectedIndex = 1;
+                        i = selectedIndex;
                         print(selectedIndex);
                       })
                     },
@@ -96,9 +101,10 @@ class _NavBarState extends State<NavBar> {
                       selectedIndex: selectedIndex,
                     ),
                     onTap: () => {
-                      context.go("/home"),
+                      context.go("/view"),
                       setState(() {
                         selectedIndex = 2;
+                        i = selectedIndex;
                       })
                     },
                   ),
@@ -109,9 +115,10 @@ class _NavBarState extends State<NavBar> {
                       selectedIndex: selectedIndex,
                     ),
                     onTap: () => {
-                      context.go("/home"),
+                      context.go("/profile"),
                       setState(() {
                         selectedIndex = 3;
+                        i = selectedIndex;
                       })
                     },
                   ),

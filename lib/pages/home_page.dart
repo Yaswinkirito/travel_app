@@ -39,10 +39,7 @@ class _PagesState extends State<Pages> {
               height: 300,
               width: 600,
               child: StreamCarousel(
-                  collection: 'places',
-                  height: 402 * (1 / 3),
-                  width: 0.82,
-                  grid: false)),
+                  collection: 'places', height: 0.5, width: 0.48, grid: false)),
           Padding(
             padding: const EdgeInsets.all(12.0),
             child: Row(
@@ -92,7 +89,7 @@ class bar extends StatelessWidget {
           style: TextStyle(fontSize: 25),
         ),
         Icon(
-          Icons.circle,
+          Icons.person,
           size: 43,
         )
       ]),
